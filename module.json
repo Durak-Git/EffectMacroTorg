@@ -19,12 +19,12 @@
     {
       "name": "Durak-Git",
       "url": "-",
-      "discord": "discordID#0001"
+      "discord": "Durak#6696"
     }
   ],
   "relationships": {
     "systems": [],
-    "requires": [torgeternity]
+    "requires": []
   },
   "languages": [
     {
