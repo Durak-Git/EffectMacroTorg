@@ -1,0 +1,21 @@
+{
+    "btorg": {
+        "attributes": {
+            "charisma": "Charisma",
+            "dexterity": "Geschicklichkeit",
+            "mind": "Verstand",
+            "spirit": "Geist",
+            "strength": "Stärke"
+        },
+        "submit": {
+            "apply": "Anwenden",
+            "choice": "Your choice",
+            "choose": "Which attribute do you want to modify ?",
+            "bonusTitle" : "Input the bonus/malus's value",
+            "value": "Choose the Wert for the bonus",
+            "time": "Choose the duration in round(s)",
+            "timeLabel": "Duration choice",
+            "mod": "Bonus modification according to a max or min effect"
+        }
+    }
+}
