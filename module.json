@@ -26,6 +26,16 @@
     "systems": [],
     "requires": []
   },
+  "packs": [
+    {
+        "name": "EffectMacroTorg-macros",
+        "label": "Module Macros",
+        "path": "packs/macros.db",
+        "entity": "Macro",
+        "type": "Macro"
+    }
+
+],
   "languages": [
     {
       "lang": "en",
