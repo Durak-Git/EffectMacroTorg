@@ -1,5 +1,6 @@
 {
   "id": "EffectMacroTorg",
+  "name": "EffectMacroTorg",
   "title": "TORG : Effect Creation",
   "description": "Localized macro that creates Skills Effects related to an Attribute Effect",
   "version": "This is auto replaced",
