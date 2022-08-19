@@ -6,7 +6,9 @@
   "version": "This is auto replaced",
   "library": "false",
   "manifestPlusVersion": "1.2.0",
-  "compatibility": {
+  "minimumCoreVersion": "0.8.6",  //v9 format
+  "compatibleCoreVersion": "9",   //v9 format
+  "compatibility": {              //V10 format
     "minimum": 9,
     "verified": 9,
     "maximum": 9
