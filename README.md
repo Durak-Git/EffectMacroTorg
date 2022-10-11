@@ -10,6 +10,9 @@ Example:</br>
     
 2.Macro for Threat Active defense, select a token, it generates the Defenses bonus (no poss/up/reroll available)
 
+3.A macro to show Drama cards, for powers that allows to see/reorder/discard some of them.
+It does not make all this, just show to selected players 1 to 3 cards, next from an active and started Combat encounter.
+
 # Defaults
 If you already created an exhaustive passive effect that handles the bonus, it could give bad values.</br>
 Others surely, that's why it's mainly for a personnal use.
