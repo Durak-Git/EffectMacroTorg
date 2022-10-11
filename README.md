@@ -8,7 +8,8 @@ Example:</br>
   My DragonWarrior with 9 Dex and a limitation of MaxDex=10 gets a +3 buff</br>
     The effect will generate a +1 Effect, according to the limitation of 10.</br>
     
-2.Macro for Threat Active defense, select a token, it generates the Defenses bonus (no poss/up/reroll available)
+2.Macro for Threat Active defense, select a token, it generates the Defenses bonus (no poss/up/reroll available)</br>
+(not functional, need to import the torgBonus function)
 
 3.A macro to show Drama cards, for powers that allows to see/reorder/discard some of them.</br>
 It does not make all this, just show to selected players the next 1 to 3 cards from an active and started Combat encounter.
