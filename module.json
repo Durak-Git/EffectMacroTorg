@@ -37,7 +37,10 @@
         "type": "Macro"
     }
 
-],
+  ],
+  "esmodules": [
+        "scripts/main.js"
+  ],
   "languages": [
     {
       "lang": "en",
