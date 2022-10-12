@@ -1,21 +1,24 @@
 {
     "EffectMacroTorg": {
-        "attributes": {
-            "charisma": "Charisme",
-            "dexterity": "Dexterité",
-            "mind": "Raison",
-            "spirit": "Esprit",
-            "strength": "Force"
-        },
-        "submit": {
-            "apply": "Valider",
-            "choice": "Votre choix",
-            "choose": "Quel attribut souhaitez vous modifier ?",
-            "bonusTitle" : "Saisie de la valeur du bonus/malus",
-            "value": "Choisissez la valeur de la modification",
-            "time": "Saisissez la durée en round(s)",
-            "timeLabel": "Choix de la durée",
-            "mod": "Modification du bonus saisi pour respecter un effet de max ou min"
-        }
+        "charisma": "Charisme",
+        "dexterity": "Dexterité",
+        "mind": "Raison",
+        "spirit": "Esprit",
+        "strength": "Force",
+        "defense": "Defenses",
+        "apply": "Valider",
+        "nbCards": "Quantity of cards",
+        "nbCardsValue": "Number of cards to show to player",
+        "choice": "Votre choix",
+        "choose": "Quel attribut souhaitez vous modifier ?",
+        "bonusTitle" : "Saisie de la valeur du bonus/malus",
+        "value": "Choisissez la valeur de la modification",
+        "time": "Saisissez la durée en round(s)",
+        "timeLabel": "Choix de la durée",
+        "mod": "Modification du bonus saisi pour respecter un effet de max ou min",
+        "recipient": "Choice whisper's recipient",
+        "whisper": "Quantity of cards",
+        "noFight": "No activefight, or not started",
+        "show": "Carte(s) suivante(s)"
     }
 }
