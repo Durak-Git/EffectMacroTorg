@@ -19,6 +19,7 @@ If you already created an exhaustive passive effect that handles the bonus, it c
 Others surely, that's why it's mainly for a personnal use.
 
 # Previous League information hidden from here, edit to see
+(Many informations that take a lot of place)
 <!--- [](https://img.shields.io/badge/Foundry-v0.8.6-informational)
 <!--- Downloads @ Latest Badge 
 <!--- replace <user>/<repo> with your username/repository -->
