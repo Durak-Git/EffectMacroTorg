@@ -1,5 +1,4 @@
 Hooks.once("init", async function () {
-    console.log("Pase ici");
     game.effectMacroTorg = {
         torgB,
         viewMode: true
