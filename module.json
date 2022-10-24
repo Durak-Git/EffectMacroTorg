@@ -39,7 +39,7 @@
 
   ],
   "esmodules": [
-        "mainEffect.js"
+        "scripts/mainEffect.js"
   ],
   "languages": [
     {
