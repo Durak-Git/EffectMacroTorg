@@ -16,7 +16,7 @@ A second activation of the macro delete the AvtiveDefense for selected token</br
 3.A macro to show Drama cards, for powers that allows to see/reorder/discard some of them.</br>
 It does not make all this, just show to selected active players the next 1 to 3 cards from an active and started Combat encounter.
 
-4.A macro to cancel the drama deck drawof a new rouns</br>
+4.A macro to cancel the drama deck draw of a new round</br>
 The chat message must be the last in the chatLog</br>
 
 # ScreenShots are coming, somed defaults will be listed
