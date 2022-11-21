@@ -19,6 +19,7 @@
         "recipient": "Destinataire(s) du message privé",
         "whisper": "Nombre de cartes",
         "noFight": "Pas de rencontre active, ou initiée",
-        "show": "Carte(s) suivante(s)"
+        "show": "Carte(s) suivante(s)",
+        "curse": "Malédiction"
     }
 }
