@@ -6,6 +6,7 @@
         "spirit": "Espíritu",
         "strength": "Fuerza",
         "defense": "Defenses",
+        "physicalDefense" : "Physical defenses",
         "apply": "Aplicar",
         "nbCards": "Quantity of cards",
         "nbCardsValue": "Number of cards to show to player",

@@ -6,6 +6,7 @@
         "spirit": "Geist",
         "strength": "Stärke",
         "defense": "Verteidigungen",
+        "physicalDefense" : "Physical defenses",
         "apply": "Anwenden",
         "nbCards": "Kartenmenge",
         "nbCardsValue": "Menge der Karten, die Spieler gezeigt werden sollen",
