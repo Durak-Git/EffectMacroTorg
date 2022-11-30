@@ -5,6 +5,7 @@ Hooks.once("init", async function () {
         dramaVision,
         dramaFlashback,
         torgB,
+        playerPlayback,
         viewMode: true
     };
 });
@@ -140,7 +141,7 @@ async function torgBuff() {
 
     // Choose the attribute you want to modify
     const mychoice = new Promise((resolve, reject) => {
-    var entree = new Dialog({
+        new Dialog({
         title: game.i18n.localize("EffectMacroTorg.choice"),
         content: game.i18n.localize("EffectMacroTorg.choose"),
         buttons: {
@@ -178,6 +179,12 @@ async function torgBuff() {
                 label: game.i18n.localize("EffectMacroTorg.curse"),
                 callback: async html => {
                     resolve("all");
+                    }
+                },
+            physicalDefense: {
+                label: game.i18n.localize("EffectMacroTorg.physicalDefense"),
+                callback: async html => {
+                    resolve("physicalDefense");
                     }
                 },
             defense: {
@@ -269,6 +276,29 @@ async function torgBuff() {
     };
     game.actors.get(actorID).createEmbeddedDocuments("ActiveEffect",[NewEffect]);
     }/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    else if (attr === "physicalDefense") {//only physical Defenses
+        let NewEffect = {
+            label : game.i18n.localize("EffectMacroTorg.defense")+" / "+bonu+" / "+dur+"rd(s)",
+            duration : {"rounds" : dur},
+            changes : [{
+            "key": "system.dodgeDefense",
+            "value": bonu,
+            "mode": 2
+            },{
+            "key": "system.meleeWeaponsDefense",
+            "value": bonu,
+            "mode": 2
+            },{
+            "key": "system.unarmedCombatDefense",
+            "value": bonu,
+            "mode": 2
+            }],
+            disabled : false,
+            tint : "#00ff00",
+            icon : "icons/svg/upgrade.svg"
+        };
+        game.actors.get(actorID).createEmbeddedDocuments("ActiveEffect",[NewEffect]);
+        }/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     else if (attr === "all") {//affect ALL attributes
     ["mind", "charisma", "strength", "spirit", "dexterity"].forEach(att =>  {
     // Search for a limitation value and bonus correction
@@ -590,6 +620,22 @@ async function dramaFlashback(){
     let activeCard = dramaActive.cards.contents[0];
     let activeImage = restoreOldActive.faces[0].img;
     game.combats.active.setFlag("torgeternity", "activeCard", activeImage);
+}
+
+//If you need to cancel a card a player just played
+async function playerPlayback(){
+    var parentMessage = game.messages.contents.pop();
+    console.log(parentMessage);
+    //const dramaDeck = game.cards.get(game.settings.get("torgeternity", "deckSetting").dramaDeck);
+    //const dramaDiscard = game.cards.get(game.settings.get("torgeternity", "deckSetting").dramaDiscard);
+    //const dramaActive = game.cards.get(game.settings.get("torgeternity", "deckSetting").dramaActive);
+    //let restoreOldActive = Array.from(dramaDiscard.cards).pop();
+    //let removeActiveCard = Array.from(dramaActive.cards).pop();
+    //removeActiveCard.pass(dramaDeck);
+    //restoreOldActive.pass(dramaActive);
+    //let activeCard = dramaActive.cards.contents[0];
+    //let activeImage = restoreOldActive.faces[0].img;
+    //game.combats.active.setFlag("torgeternity", "activeCard", activeImage);
 }
 
 //Hooks.on(itemDropActorSheet)

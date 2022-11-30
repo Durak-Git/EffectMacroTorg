@@ -6,6 +6,7 @@
         "spirit": "Espíritu",
         "strength": "Fuerza",
         "defense": "Defenses",
+        "physicalDefense" : "Physical defenses",
         "apply": "Aplicar",
         "nbCards": "Quantity of cards",
         "nbCardsValue": "Number of cards to show to player",
@@ -20,6 +21,8 @@
         "whisper": "Whisper to checked active player",
         "noFight": "No activefight, or not started",
         "show": "Next card(s)",
-        "curse": "Every attributes"
+        "curse": "Every attributes",
+        "cardBack" : "Card goes back after missplay",
+        "cardOwner" : "Who will get the card back ?"
     }
 }

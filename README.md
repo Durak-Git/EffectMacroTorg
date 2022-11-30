@@ -24,6 +24,10 @@ It does not make all this, just show to selected active players the next 1 to 3 
 **game.effectMacroTorg.dramaFlashback()</br>**
 Combat must be started, and not first round of course</br>
 
+5.A macro to cancel the play of a destiny card from a player (NOT a COSM)</br>
+**game.effectMacroTorg.playerPlayback()</br>**
+Better if it's the last message in the log. Ask for recipient</br>
+
 # ScreenShots are coming, somed defaults will be listed
 If you already created an exhaustive passive effect that handles the bonus, it could give bad values.</br>
 Others surely, that's why it's mainly for a personnal use.

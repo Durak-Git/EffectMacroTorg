@@ -5,7 +5,8 @@
         "mind": "Raison",
         "spirit": "Esprit",
         "strength": "Force",
-        "defense": "Defenses",
+        "defense": "Défenses",
+        "physicalDefense" : "Défenses physiques",
         "apply": "Valider",
         "nbCards": "Choix des cartes",
         "nbCardsValue": "Nombre de cartes à montrer au(x) joueur(s)",
@@ -20,6 +21,8 @@
         "whisper": "Nombre de cartes",
         "noFight": "Pas de rencontre active, ou initiée",
         "show": "Carte(s) suivante(s)",
-        "curse": "Tous les attributs"
+        "curse": "Tous les attributs",
+        "cardBack" : "Restitution d'une carte jouée",
+        "cardOwner" : "A qui rendre la carte ?"
     }
 }
