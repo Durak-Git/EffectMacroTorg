@@ -21,6 +21,8 @@
         "whisper": "An markierte Spieler flüstern",
         "noFight": "Kein aktiver Kampf, oder noch nicht gestartet",
         "show": "Nächste Karte(n)",
-        "curse": "Every attributes"
+        "curse": "Every attributes",
+        "cardBack" : "Card goes back after missplay",
+        "cardOwner" : "Who will get the card back ?"
     }
 }
