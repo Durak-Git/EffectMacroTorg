@@ -623,19 +623,61 @@ async function dramaFlashback(){
 }
 
 //If you need to cancel a card a player just played
-async function playerPlayback(){
-    var parentMessage = game.messages.contents.pop();
-    console.log(parentMessage);
-    //const dramaDeck = game.cards.get(game.settings.get("torgeternity", "deckSetting").dramaDeck);
-    //const dramaDiscard = game.cards.get(game.settings.get("torgeternity", "deckSetting").dramaDiscard);
-    //const dramaActive = game.cards.get(game.settings.get("torgeternity", "deckSetting").dramaActive);
-    //let restoreOldActive = Array.from(dramaDiscard.cards).pop();
-    //let removeActiveCard = Array.from(dramaActive.cards).pop();
-    //removeActiveCard.pass(dramaDeck);
-    //restoreOldActive.pass(dramaActive);
-    //let activeCard = dramaActive.cards.contents[0];
-    //let activeImage = restoreOldActive.faces[0].img;
-    //game.combats.active.setFlag("torgeternity", "activeCard", activeImage);
+// works if the card to get back is the last message in ChatLog
+// and if player owns only one hand
+async function playerPlayback() {
+    ///////////////////////////////////////////
+    // test with a dialog to choose "to who" give a card back
+    if (!game.user.isGM) {return};
+    let applyChanges = false;
+    let users = game.users.filter(user => user.active && !user.isGM);
+    let checkOptions = ""
+    let playerTokenIds = users.map(u => u.character?.id).filter(id => id !== undefined);
+    let selectedPlayerIds = canvas.tokens.controlled.map(token => {
+    if (playerTokenIds.includes(token.actor.id)) return token.actor.id;
+        });
+    // Build checkbox list for all active players
+    users.forEach(user => {
+        let checked = !!user.character && selectedPlayerIds.includes(user.character.id) && 'checked';
+        checkOptions+=`
+            <br>
+            <input type="checkbox" name="${user.id}" id="${user.id}" value="${user.name}" ${checked}>\n
+            <label for="${user.id}">${user.name}</label>
+        `
+        });
+    new Dialog({
+        title: game.i18n.localize("EffectMacroTorg.cardBack"),
+        content:`${game.i18n.localize("EffectMacroTorg.cardOwner")} ${checkOptions} <br>`,
+            buttons:{
+            whisper:{   
+            label:game.i18n.localize("EffectMacroTorg.apply"),
+            callback: (html) => createMessage(html)
+            }
+        }
+    }).render(true);
+
+    function createMessage(html) {
+        var target;
+        // build list of selected players ids for whispers target
+        for ( let user of users ) {
+            if (html.find('[name="'+user.id+'"]')[0].checked){
+                applyChanges=true;
+                target = user;
+            }        
+        }
+        if(!applyChanges) {
+            return;
+        } else {
+            const destinyDiscard = game.cards.get(game.settings.get("torgeternity", "deckSetting").destinyDiscard);
+            const lastCard = destinyDiscard.cards.contents.pop();
+            const parentHand = target.character.getDefaultHand();
+            const listMessage = game.messages.contents;
+            var filtre = listMessage.filter(m => m._source.user === target.id);
+            var lastMessage = filtre.pop();
+            lastCard.pass(parentHand);
+            if (lastCard) {ChatMessage.deleteDocuments([lastMessage.id]);}
+        }
+    }
 }
 
 //Hooks.on(itemDropActorSheet)
