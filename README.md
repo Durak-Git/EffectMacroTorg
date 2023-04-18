@@ -1,3 +1,5 @@
+![Latest Release Download Count](https://img.shields.io/github/downloads/Durak-Git/EffectMacroTorg/latest/module.zip)
+
 ## UNDER CONSTRUCTION
 # Description
 
