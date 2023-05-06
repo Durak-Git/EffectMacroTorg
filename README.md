@@ -30,6 +30,9 @@ Combat must be started, and not first round of course</br>
 **game.effectMacroTorg.playerPlayback()</br>**
 Better if it's the last message in the log. Ask for recipient</br>
 
+6.Added a script that un-pool cards of players at the end of combat.
+(remove the flag)
+
 # ScreenShots are coming, somed defaults will be listed
 If you already created an exhaustive passive effect that handles the bonus, it could give bad values.</br>
 Others surely, that's why it's mainly for a personnal use.
