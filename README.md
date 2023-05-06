@@ -1,3 +1,5 @@
+![Latest Release Download Count](https://img.shields.io/github/downloads/Durak-Git/EffectMacroTorg/latest/module.zip)
+
 ## UNDER CONSTRUCTION
 # Description
 
@@ -27,6 +29,9 @@ Combat must be started, and not first round of course</br>
 5.A macro to cancel the play of a destiny card from a player (NOT a COSM)</br>
 **game.effectMacroTorg.playerPlayback()</br>**
 Better if it's the last message in the log. Ask for recipient</br>
+
+6.Added a script that un-pool cards of players at the end of combat.
+(remove the flag)
 
 # ScreenShots are coming, somed defaults will be listed
 If you already created an exhaustive passive effect that handles the bonus, it could give bad values.</br>
