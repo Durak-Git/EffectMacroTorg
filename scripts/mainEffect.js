@@ -14,7 +14,7 @@ Hooks.on("deleteCombat", async (combat, dataUpdate) => {
     var listCombatants = [];
     var listHandsReset =[];
     //actor listing in the closing combat
-    combat.combatants.forEach(fighter => listCombatants.push(fighter.actorId));
+    combat.combatants.filter(sk => sk.actor.type === "stormknight").forEach(fighter => listCombatants.push(fighter.actorId));
     //hand listing of actors in closing combat
     listCombatants.forEach(i => listHandsReset.push(game.actors.get(i).getDefaultHand()));
     //delete the flag that give the pooled condition
