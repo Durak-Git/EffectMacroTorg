@@ -13,12 +13,24 @@ Hooks.once("init", async function () {
 Hooks.on("deleteCombat", async (combat, dataUpdate) => {
     var listCombatants = [];
     var listHandsReset =[];
-    //actor listing in the closing combat
+    //listing of actors in the closing combat
     combat.combatants.filter(sk => sk.actor.type === "stormknight").forEach(fighter => listCombatants.push(fighter.actorId));
-    //hand listing of actors in closing combat
-    listCombatants.forEach(i => listHandsReset.push(game.actors.get(i).getDefaultHand()));
+    //listing of hands' actors in closing combat, with test for existing hand
+    listCombatants.forEach(i => {if (!!game.actors.get(i).getDefaultHand()) {listHandsReset.push(game.actors.get(i).getDefaultHand())}});
     //delete the flag that give the pooled condition
     listHandsReset.forEach(hand => hand.cards.forEach(card => card.unsetFlag("torgeternity", "pooled")));
+})
+
+Hooks.on("preUpdateCombatant", async (torgCombatant, dataFlags, dataDiff, userId) => {
+    var myActor = torgCombatant.actor; //game.actors.get(torgCombatant.actorId);
+    var oldStymied = myActor.effects.find(a => a.name === (game.i18n.localize("torgeternity.statusEffects.stymied")));
+    var oldVulnerable = myActor.effects.find(a => a.name === (game.i18n.localize("torgeternity.statusEffects.vulnerable")));
+    var oldVStymied = myActor.effects.find(a => a.name === (game.i18n.localize("torgeternity.statusEffects.veryStymied")));
+    var oldVVulnerable = myActor.effects.find(a => a.name === (game.i18n.localize("torgeternity.statusEffects.veryVulnerable")));
+    if (!!oldStymied & dataFlags.flags.world.turnTaken) oldStymied.delete();
+    if (!!oldVulnerable & dataFlags.flags.world.turnTaken) oldVulnerable.delete();
+    if (!!oldVStymied & dataFlags.flags.world.turnTaken) oldVStymied.delete();
+    if (!!oldVVulnerable & dataFlags.flags.world.turnTaken) oldVVulnerable.delete();
 })
 
 function torgB(rollTotal) {
