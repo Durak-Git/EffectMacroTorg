@@ -22,15 +22,17 @@ Hooks.on("deleteCombat", async (combat, dataUpdate) => {
 })
 
 Hooks.on("preUpdateCombatant", async (torgCombatant, dataFlags, dataDiff, userId) => {
-    var myActor = torgCombatant.actor; //game.actors.get(torgCombatant.actorId);
-    var oldStymied = myActor.effects.find(a => a.label === (game.i18n.localize("torgeternity.statusEffects.stymied")));
-    var oldVulnerable = myActor.effects.find(a => a.label === (game.i18n.localize("torgeternity.statusEffects.vulnerable")));
-    var oldVStymied = myActor.effects.find(a => a.label === (game.i18n.localize("torgeternity.statusEffects.veryStymied")));
-    var oldVVulnerable = myActor.effects.find(a => a.label === (game.i18n.localize("torgeternity.statusEffects.veryVulnerable")));
-    if (!!oldStymied & dataFlags.flags.world.turnTaken) oldStymied.delete();
-    if (!!oldVulnerable & dataFlags.flags.world.turnTaken) oldVulnerable.delete();
-    if (!!oldVStymied & dataFlags.flags.world.turnTaken) oldVStymied.delete();
-    if (!!oldVVulnerable & dataFlags.flags.world.turnTaken) oldVVulnerable.delete();
+    if (dataFlags.flags.world.turnTaken) {
+        var myActor = torgCombatant.actor;
+        var oldStymied = myActor.effects.find(a => a.name === (game.i18n.localize("torgeternity.statusEffects.stymied")));
+        var oldVulnerable = myActor.effects.find(a => a.name === (game.i18n.localize("torgeternity.statusEffects.vulnerable")));
+        var oldVStymied = myActor.effects.find(a => a.name === (game.i18n.localize("torgeternity.statusEffects.veryStymied")));
+        var oldVVulnerable = myActor.effects.find(a => a.name === (game.i18n.localize("torgeternity.statusEffects.veryVulnerable")));
+        if (!!oldStymied) oldStymied.delete();
+        if (!!oldVulnerable) oldVulnerable.delete();
+        if (!!oldVStymied) oldVStymied.delete();
+        if (!!oldVVulnerable) oldVVulnerable.delete();
+    }
 })
 
 function torgB(rollTotal) {
@@ -79,22 +81,22 @@ async function simpleDefense() {
     targets.forEach(element => {
         var myActor = element.actor;
         console.log(myActor);
-    if (!myActor) {
-    ui.notifications.error("You must select a token!");    
-    } else {
-    var oldAD = myActor.effects.find(a => a.label === "ActiveDefense");
+        if (!myActor) {
+        ui.notifications.error("You must select a token!");    
+        } else {
+        var oldAD = myActor.effects.find(a => a.name === game.i18n.localize("EffectMacroTorg.AD"));
 
-    if (!oldAD) {
-    var jet = new Roll("1d20x10x20").evaluate({ async: false });
-    var bo = Math.max(1,game.effectMacroTorg.torgB(jet.total));
-    let AD = {
-                    speaker: ChatMessage.getSpeaker(),
-                    content: "Active defense +"+ bo
-                };
-    ChatMessage.create(AD);
+        if (!oldAD) {
+        var jet = new Roll("1d20x10x20").evaluate({ async: false });
+        var bo = Math.max(1,game.effectMacroTorg.torgB(jet.total));
+        let AD = {
+                        speaker: ChatMessage.getSpeaker(),
+                        content: game.i18n.localize("EffectMacroTorg.AD")+"+"+ bo
+                    };
+        ChatMessage.create(AD);
 
                 let NewActiveDefense = {
-                    label : "ActiveDefense",         
+                    name : game.i18n.localize("EffectMacroTorg.AD"),         
                     icon : "icons/equipment/shield/heater-crystal-blue.webp",   
                     duration : {"rounds" : 1},
                     changes : [{  
@@ -138,14 +140,14 @@ async function simpleDefense() {
                 myActor.createEmbeddedDocuments("ActiveEffect",[NewActiveDefense]);
 
             };
-    if (oldAD) {
-    let RAD = {
+        if (oldAD) {
+            let RAD = {
                     speaker: ChatMessage.getSpeaker(),
                     content: game.i18n.localize('torgeternity.chatText.check.result.resetDefense')
-                };
-    ChatMessage.create(RAD);
-    myActor.effects.find(a => a.label === "ActiveDefense").delete();
-    }};
+            };
+        ChatMessage.create(RAD).then(myActor.effects.find(a => a.name === game.i18n.localize("EffectMacroTorg.AD")).delete());
+        }
+        };
     });
 }
 
@@ -262,47 +264,47 @@ async function torgBuff() {
     .then (dur => {return dur;});
 
     if (attr === "defense") {//only Defenses, but ALL defenses
-    let NewEffect = {
-        label : game.i18n.localize("EffectMacroTorg.defense")+" / "+bonu+" / "+dur+"rd(s)",
-        duration : {"rounds" : dur},
-        changes : [{
-        "key": "system.dodgeDefense",
-        "value": bonu,
-        "mode": 2
-        },{
-        "key": "system.meleeWeaponsDefense",
-        "value": bonu,
-        "mode": 2
-        },{
-        "key": "system.unarmedCombatDefense",
-        "value": bonu,
-        "mode": 2
-        },{
-        "key": "system.intimidationDefense",
-        "value": bonu,
-        "mode": 2
-        },{
-        "key": "system.maneuverDefense",
-        "value": bonu,
-        "mode": 2
-        },{
-        "key": "system.tauntDefense",
-        "value": bonu,
-        "mode": 2
-        },{
-        "key": "system.trickDefense",
-        "value": bonu,
-        "mode": 2
-        }],
-        disabled : false,
-        tint : "#00ff00",
-        icon : "icons/svg/upgrade.svg"
-    };
-    game.actors.get(actorID).createEmbeddedDocuments("ActiveEffect",[NewEffect]);
+        let NewEffect = {
+            name : game.i18n.localize("EffectMacroTorg.defense")+" / "+bonu+" / "+dur+"rd(s)",
+            duration : {"rounds" : dur},
+            changes : [{
+            "key": "system.dodgeDefense",
+            "value": bonu,
+            "mode": 2
+            },{
+            "key": "system.meleeWeaponsDefense",
+            "value": bonu,
+            "mode": 2
+            },{
+            "key": "system.unarmedCombatDefense",
+            "value": bonu,
+            "mode": 2
+            },{
+            "key": "system.intimidationDefense",
+            "value": bonu,
+            "mode": 2
+            },{
+            "key": "system.maneuverDefense",
+            "value": bonu,
+            "mode": 2
+            },{
+            "key": "system.tauntDefense",
+            "value": bonu,
+            "mode": 2
+            },{
+            "key": "system.trickDefense",
+            "value": bonu,
+            "mode": 2
+            }],
+            disabled : false,
+            tint : "#00ff00",
+            icon : "icons/svg/upgrade.svg"
+        };
+        game.actors.get(actorID).createEmbeddedDocuments("ActiveEffect",[NewEffect]);
     }/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     else if (attr === "physicalDefense") {//only physical Defenses
         let NewEffect = {
-            label : game.i18n.localize("EffectMacroTorg.defense")+" / "+bonu+" / "+dur+"rd(s)",
+            name : game.i18n.localize("EffectMacroTorg.defense")+" / "+bonu+" / "+dur+"rd(s)",
             duration : {"rounds" : dur},
             changes : [{
             "key": "system.dodgeDefense",
@@ -320,45 +322,45 @@ async function torgBuff() {
             disabled : false,
             tint : "#00ff00",
             icon : "icons/svg/upgrade.svg"
-        };
-        game.actors.get(actorID).createEmbeddedDocuments("ActiveEffect",[NewEffect]);
+            };
+            game.actors.get(actorID).createEmbeddedDocuments("ActiveEffect",[NewEffect]);
         }/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    else if (attr === "all") {//affect ALL attributes
-    ["mind", "charisma", "strength", "spirit", "dexterity"].forEach(att =>  {
-    // Search for a limitation value and bonus correction
-    var tout = [];  //array of already existing effects related to the attribute
-    for (var i of game.actors.get(actorID).effects) {
-        tout = tout.concat(i.changes.filter(va => va.key === "system.attributes."+att));
-    };
+    else if (attr === "all") {//affect ALL attributes ["mind", "charisma", "strength", "spirit", "dexterity"]
+        ["mind", "spirit", "strength", "dexterity", "charisma"].forEach(att =>  {
+            // Search for a limitation value and bonus correction
+            var tout = [];  //array of already existing effects related to the attribute
+            for (var i of game.actors.get(actorID).effects) {
+                tout = tout.concat(i.changes.filter(va => va.key === "system.attributes."+att));
+            };
 
 
-    for (var i of tout) {
-        if (i.mode === 2) {prevBonus += Number.parseInt(i.value);}  //bonus already existing
-        else if (i.mode === 3) {maxAttr = Math.min(maxAttr, Number.parseInt(i.value));} //search for a downgrade effect
-        else if (i.mode === 4)  {minAttr = Math.max(minAttr, Number.parseInt(i.value));}//search for an upgrade effect
-        else if (i.mode === 5)  {                                                       //search for an overide value
-            minAttr = Math.max(minAttr, Number.parseInt(i.value));
-            maxAttr = Math.min(maxAttr, Number.parseInt(i.value));
-        }
-    };
+            for (var i of tout) {
+                if (i.mode === 2) {prevBonus += Number.parseInt(i.value);}  //bonus already existing
+                else if (i.mode === 3) {maxAttr = Math.min(maxAttr, Number.parseInt(i.value));} //search for a downgrade effect
+                else if (i.mode === 4)  {minAttr = Math.max(minAttr, Number.parseInt(i.value));}//search for an upgrade effect
+                else if (i.mode === 5)  {                                                       //search for an overide value
+                    minAttr = Math.max(minAttr, Number.parseInt(i.value));
+                    maxAttr = Math.min(maxAttr, Number.parseInt(i.value));
+                }
+            };
 
-    console.log("Downgrade ->"+maxAttr +"/Upgrade->"+ minAttr +"/oldBonus->"+ prevBonus);
+            console.log("Downgrade ->"+maxAttr +"/Upgrade->"+ minAttr +"/oldBonus->"+ prevBonus);
 
-    //bonus modification to match the max/min/override information
-    var unModified = game.actors.get(actorID)._source.system.attributes[att];//unmodified base attribute
-    if ((unModified + bonu + prevBonus) >= maxAttr) {
-        bonu = maxAttr - unModified - prevBonus;
-        ChatMessage.create({content: `${game.i18n.localize("EffectMacroTorg.mod")}`});
-    };
-    if ((unModified + bonu + prevBonus) <= minAttr) {
-        bonu = minAttr - unModified - prevBonus;
-        ChatMessage.create({content: `${game.i18n.localize("EffectMacroTorg.mod")}`});
-    };
-    //need comments if modifications ?
+            //bonus modification to match the max/min/override information
+            var unModified = game.actors.get(actorID)._source.system.attributes[att];//unmodified base attribute
+            if ((unModified + bonu + prevBonus) >= maxAttr) {
+                bonu = maxAttr - unModified - prevBonus;
+                ChatMessage.create({content: `${game.i18n.localize("EffectMacroTorg.mod")}`});
+            };
+            if ((unModified + bonu + prevBonus) <= minAttr) {
+                bonu = minAttr - unModified - prevBonus;
+                ChatMessage.create({content: `${game.i18n.localize("EffectMacroTorg.mod")}`});
+            };
+            //need comments if modifications ?
 
-    //preparation of attribute effect, "template" for following skills effect
-    let NewEffect = {
-                    label : "---",
+            //preparation of attribute effect, "template" for following skills effect
+            let NewEffect = {
+                    name : "---",
                     duration : {"rounds" : dur},
                     changes : [{
                             "key": "system.attributes."+att,
@@ -368,76 +370,77 @@ async function torgBuff() {
                     disabled : false
                 };
 
-    // Aspect modifications related to bonus/malus
-    switch (bonu < 0) {
-    case true:
-        NewEffect.tint = "#ff0000";
-        NewEffect.icon = "icons/svg/downgrade.svg";
-    break;
-    default:
-        NewEffect.tint = "#00ff00";
-        NewEffect.icon = "icons/svg/upgrade.svg";
-    }
-    NewEffect.label = game.i18n.localize("EffectMacroTorg."+att)+ game.i18n.localize("EffectMacroTorg.curse")+" / "+bonu+" / "+dur+"rd(s)";
+            // Aspect modifications related to bonus/malus
+            switch (bonu < 0) {
+                case true:
+                    NewEffect.tint = "#ff0000";
+                    NewEffect.icon = "icons/svg/downgrade.svg";
+                break;
+                default:
+                    NewEffect.tint = "#00ff00";
+                    NewEffect.icon = "icons/svg/upgrade.svg";
+                };
+            NewEffect.name = game.i18n.localize("EffectMacroTorg."+att)+ "-" + game.i18n.localize("EffectMacroTorg.curse")+" / "+bonu+" / "+dur+"rd(s)";
 
-    //browsing skills, create the effects related to the attribute (code seems ugly, by I dare not touch it)
-    const oldChange = NewEffect.changes;
-    var newChange = oldChange;
-    for (var skillAttr in listSkills) {
-        if ((listSkills[skillAttr].baseAttribute === att) && (listSkills[skillAttr].value >= 0)) {
-            var createNew = [duplicate(oldChange[0])];
-            createNew[0].key = "system.skills."+skillAttr+".value";
-            createNew[0].value = bonu;
-            newChange = newChange.concat(createNew);
-        };
-    };
+            //browsing skills, create the effects related to the attribute (code seems ugly, by I dare not touch it)
+            var oldChange = NewEffect.changes;
+            var newChange = oldChange;
+            for (var skillAttr in listSkills) {
+                if ((listSkills[skillAttr].baseAttribute === att) && (listSkills[skillAttr].value >= 0)) {
+                    var createNew = [duplicate(oldChange[0])];
+                    createNew[0].key = "system.skills."+skillAttr+".value";
+                    createNew[0].value = bonu;
+                    newChange = newChange.concat(createNew);
+                };
+            };
 
-    // Defense modifications if necessary
-    switch (att) {
-        case "mind" :
-            var createNew = [duplicate(oldChange[0])];
-            createNew[0].key = "system.trickDefense";
-            createNew[0].value = bonu;
-            newChange = newChange.concat(createNew);
-        break;
-        case "spirit":
-            var createNew = [duplicate(oldChange[0])];
-            createNew[0].key = "system.intimidationDefense";
-            createNew[0].value = bonu;
-            newChange = newChange.concat(createNew);
-        break;
-        case "charisma":
-            var createNew = [duplicate(oldChange[0])];
-            createNew[0].key = "system.tauntDefense";
-            createNew[0].value = bonu;
-            newChange = newChange.concat(createNew);
-        break;
-        case "dexterity":
-            var createOne = [duplicate(oldChange[0])];
-            createOne[0].key = "system.dodgeDefense";
-            createOne[0].value = bonu;
-            newChange = newChange.concat(createOne);
-            var createTwo = [duplicate(oldChange[0])];
-            createTwo[0].key = "system.meleeWeaponsDefense";
-            createTwo[0].value = bonu;
-            newChange = newChange.concat(createTwo);
-            var createThree = [duplicate(oldChange[0])];
-            createThree[0].key = "system.unarmedCombatDefense";
-            createThree[0].value = bonu;
-            newChange = newChange.concat(createThree);
-            var createFour = [duplicate(oldChange[0])];
-            createFour[0].key = "system.maneuverDefense";
-            createFour[0].value = bonu;
-            newChange = newChange.concat(createFour);
-        break;
-        default:
-    };
-    NewEffect.changes = newChange;
-    console.log(NewEffect);
-    //at least, create the effect
-    game.actors.get(actorID).createEmbeddedDocuments("ActiveEffect",[NewEffect]);
+            // Defense modifications if necessary
+            switch (att) {
+                case "mind" :
+                    var createNew = [duplicate(oldChange[0])];
+                    createNew[0].key = "system.trickDefense";
+                    createNew[0].value = bonu;
+                    newChange = newChange.concat(createNew);
+                break;
+                case "spirit":
+                    var createNew = [duplicate(oldChange[0])];
+                    createNew[0].key = "system.intimidationDefense";
+                    createNew[0].value = bonu;
+                    newChange = newChange.concat(createNew);
+                break;
+                case "charisma":
+                    var createNew = [duplicate(oldChange[0])];
+                    createNew[0].key = "system.tauntDefense";
+                    createNew[0].value = bonu;
+                    newChange = newChange.concat(createNew);
+                break;
+                case "dexterity":
+                    var createOne = [duplicate(oldChange[0])];
+                    createOne[0].key = "system.dodgeDefense";
+                    createOne[0].value = bonu;
+                    newChange = newChange.concat(createOne);
+                    var createTwo = [duplicate(oldChange[0])];
+                    createTwo[0].key = "system.meleeWeaponsDefense";
+                    createTwo[0].value = bonu;
+                    newChange = newChange.concat(createTwo);
+                    var createThree = [duplicate(oldChange[0])];
+                    createThree[0].key = "system.unarmedCombatDefense";
+                    createThree[0].value = bonu;
+                    newChange = newChange.concat(createThree);
+                    var createFour = [duplicate(oldChange[0])];
+                    createFour[0].key = "system.maneuverDefense";
+                    createFour[0].value = bonu;
+                    newChange = newChange.concat(createFour);
+                break;
+                default:
+            };
+            NewEffect.changes = newChange;
+            console.log(NewEffect);
+            //at least, create the effect
+            game.actors.get(actorID).createEmbeddedDocuments("ActiveEffect",[NewEffect]);
     //////////////////////////////////////////////////////////////////////////////////////////////
-    })} else {//One attribute
+        });
+    } else {//One attribute
     // Search for a limitation value and bonus correction
     var tout = [];  //array of already existing effects related to the attribute
     for (var i of game.actors.get(actorID).effects) {
@@ -471,7 +474,7 @@ async function torgBuff() {
 
     //preparation of attribute effect, "template" for following skills effect
     let NewEffect = {
-                    label : "---",
+                    name : "---",
                     duration : {"rounds" : dur},
                     changes : [{
                             "key": "system.attributes."+attr,
@@ -492,7 +495,7 @@ async function torgBuff() {
         NewEffect.tint = "#00ff00";
         NewEffect.icon = "icons/svg/upgrade.svg";
     }
-    NewEffect.label = game.i18n.localize("EffectMacroTorg."+attr)+" / "+bonu+" / "+dur+"rd(s)";
+    NewEffect.name = game.i18n.localize("EffectMacroTorg."+attr)+" / "+bonu+" / "+dur+"rd(s)";
 
     //browsing skills, create the effects related to the attribute (code seems ugly, by I dare not touch it)
     const oldChange = NewEffect.changes;
