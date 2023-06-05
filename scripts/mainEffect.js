@@ -188,9 +188,6 @@ async function playerPlayback() {
     }
 }
 
-//Hooks.on(itemDropActorSheet)
-
-
 function torgB(rollTotal) {
     let bonu;
     if (rollTotal == 1) {
@@ -717,3 +714,18 @@ async function torgBuff() {
     await game.actors.get(actorID).createEmbeddedDocuments("ActiveEffect",[NewEffect]);
     }
 }
+
+
+/*
+)
+Hooks.on("dropActorSheetData", async (myVehicle, mySheet, myPassenger) => {
+console.log(myVehicle);
+console.log(mySheet);
+console.log(myPassenger);
+//if myVehicle is a vehicule actorType and myPassenger is not a vehicule actorType
+//choose between driver and gunner
+//set actor name and actor relative skill in vehicule sheet
+
+}
+
+*/
