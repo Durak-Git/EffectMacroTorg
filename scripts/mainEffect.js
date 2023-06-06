@@ -10,6 +10,7 @@ Hooks.once("ready", async function () {
     };
 });
 
+//When a combat is ended, unpool cards of participants
 Hooks.on("deleteCombat", async (combat, dataUpdate) => {
     console.log(combat);
     var listCombatants = [];
@@ -22,6 +23,7 @@ Hooks.on("deleteCombat", async (combat, dataUpdate) => {
     listHandsReset.forEach(hand => hand.cards.forEach(card => card.unsetFlag("torgeternity", "pooled")));
 })
 
+//When the turn taken button is hit, delete "until end of turn" effects (stymied/vulnerable)
 Hooks.on("preUpdateCombatant", async (torgCombatant, dataFlags, dataDiff, userId) => {
     if (dataFlags.flags.world.turnTaken) {
         var myActor = torgCombatant.actor;
@@ -36,8 +38,32 @@ Hooks.on("preUpdateCombatant", async (torgCombatant, dataFlags, dataDiff, userId
     }
 })
 
+//When a "non-vehicle actor" is drop on a "vehicle actor", proposes to replace the driver and his skill value
+Hooks.on("dropActorSheetData", async (myVehicle, mySheet, myPassenger) => {
+    if (myVehicle.type !== "vehicle" | fromUuidSync(myPassenger.uuid).type === "vehicle") return;
+    var driver = fromUuidSync(myPassenger.uuid);
+    var skill = myVehicle.system.type.toLowerCase();
+    var skillValue = driver.system.skills[skill+"Vehicles"].value;
 
-//Show next 1-3 drama cards to a selection of players
+    await Dialog.confirm({
+        title: "Choix du conducteur",
+        content: "Ce personnage devient-il le nouveau conducteur ?",
+        yes: () => {
+            if (skillValue > 0){
+                myVehicle.update({"system.operator.name" : driver.name, "system.operator.skillValue" : skillValue});
+            } else {ui.notifications.warn(driver.name+" ne sait pas conduire cet engin")
+            }
+            },
+        no: () => {},
+        render: () => {},
+        defaultYes: true,
+        rejectClose: false,
+    });
+})
+
+//START OF MACROS
+
+//Show next 1-3 drama cards to a selection of players (much of this code is stolen in others macros)
 async function dramaVision(){
     if (!game.user.isGM) {return};
     if (game.combats.map(ccc => ccc.round === 0)[0] || game.combats.size === 0) {return console.log(game.i18n.localize("EffectMacroTorg.noFight"))};
@@ -131,11 +157,8 @@ async function dramaFlashback(){
 }
 
 //If you need to cancel a card a player just played
-// works if the card to get back is the last message in ChatLog
-// and if player owns only one hand
+//works if the card to get back is the last message in ChatLog, and if player owns only one hand
 async function playerPlayback() {
-    ///////////////////////////////////////////
-    // test with a dialog to choose "to who" give a card back
     if (!game.user.isGM) {return};
     let applyChanges = false;
     let users = game.users.filter(user => user.active && !user.isGM);
@@ -186,42 +209,6 @@ async function playerPlayback() {
             if (lastCard) {ChatMessage.deleteDocuments([lastMessage.id]);}
         }
     }
-}
-
-function torgB(rollTotal) {
-    let bonu;
-    if (rollTotal == 1) {
-        bonu = -10
-    } else if (rollTotal == 2) {
-        bonu = -8
-    } else if (rollTotal <= 4) {
-        bonu = -6
-    } else if (rollTotal <= 6) {
-        bonu = -4
-    } else if (rollTotal <= 8) {
-        bonu = -2
-    } else if (rollTotal <= 10) {
-        bonu = -1
-    } else if (rollTotal <= 12) {
-        bonu = 0
-    } else if (rollTotal <= 14) {
-        bonu = 1
-    } else if (rollTotal == 15) {
-        bonu = 2
-    } else if (rollTotal == 16) {
-        bonu = 3
-    } else if (rollTotal == 17) {
-        bonu = 4
-    } else if (rollTotal == 18) {
-        bonu = 5
-    } else if (rollTotal == 19) {
-        bonu = 6
-    } else if (rollTotal == 20) {
-        bonu = 7
-    } else if (rollTotal >= 21) {
-        bonu = 7 + Math.ceil((rollTotal - 20) / 5)
-    }
-    return bonu
 }
 
 //active defense on multi selection, not compliant with possibilities/up/drama, any reroll.
@@ -453,7 +440,7 @@ async function torgBuff() {
             tint : "#00ff00",
             icon : "icons/svg/upgrade.svg"
         };
-        game.actors.get(actorID).createEmbeddedDocuments("ActiveEffect",[NewEffect]);
+        await game.actors.get(actorID).createEmbeddedDocuments("ActiveEffect",[NewEffect]);
     }/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     else if (attr === "physicalDefense") {//only physical Defenses
         let NewEffect = {
@@ -476,6 +463,7 @@ async function torgBuff() {
             tint : "#00ff00",
             icon : "icons/svg/upgrade.svg"
             };
+        await game.actors.get(actorID).createEmbeddedDocuments("ActiveEffect",[NewEffect]);
         }/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     else if (attr === "all") {//affect ALL attributes ["mind", "charisma", "strength", "spirit", "dexterity"]
         var allEffect = [];
@@ -606,7 +594,6 @@ async function torgBuff() {
         tout = tout.concat(i.changes.filter(va => va.key === "system.attributes."+attr));
     };
 
-
     for (var i of tout) {
         if (i.mode === 2) {prevBonus += Number.parseInt(i.value);}  //bonus already existing
         else if (i.mode === 3) {maxAttr = Math.min(maxAttr, Number.parseInt(i.value));} //search for a downgrade effect
@@ -642,7 +629,6 @@ async function torgBuff() {
                             }],
                     disabled : false
                 };
-
 
     // Aspect modifications related to bonus/malus
     switch (bonu < 0) {
@@ -715,17 +701,39 @@ async function torgBuff() {
     }
 }
 
-
-/*
-)
-Hooks.on("dropActorSheetData", async (myVehicle, mySheet, myPassenger) => {
-console.log(myVehicle);
-console.log(mySheet);
-console.log(myPassenger);
-//if myVehicle is a vehicule actorType and myPassenger is not a vehicule actorType
-//choose between driver and gunner
-//set actor name and actor relative skill in vehicule sheet
-
+//the bonus table, copied from the core torg
+function torgB(rollTotal) {
+    let bonu;
+    if (rollTotal == 1) {
+        bonu = -10
+    } else if (rollTotal == 2) {
+        bonu = -8
+    } else if (rollTotal <= 4) {
+        bonu = -6
+    } else if (rollTotal <= 6) {
+        bonu = -4
+    } else if (rollTotal <= 8) {
+        bonu = -2
+    } else if (rollTotal <= 10) {
+        bonu = -1
+    } else if (rollTotal <= 12) {
+        bonu = 0
+    } else if (rollTotal <= 14) {
+        bonu = 1
+    } else if (rollTotal == 15) {
+        bonu = 2
+    } else if (rollTotal == 16) {
+        bonu = 3
+    } else if (rollTotal == 17) {
+        bonu = 4
+    } else if (rollTotal == 18) {
+        bonu = 5
+    } else if (rollTotal == 19) {
+        bonu = 6
+    } else if (rollTotal == 20) {
+        bonu = 7
+    } else if (rollTotal >= 21) {
+        bonu = 7 + Math.ceil((rollTotal - 20) / 5)
+    }
+    return bonu
 }
-
-*/
