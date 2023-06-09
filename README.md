@@ -27,14 +27,19 @@ It does not make all this, just show to selected active players the next 1 to 3 
 
 4.A macro to cancel the drama deck draw of a new round</br>
 **game.effectMacroTorg.dramaFlashback()</br>**
-Combat must be started, and not first round of course</br>
+Combat must be started, and not first round of course
 
 5.A macro to cancel the play of a destiny card from a player (NOT a COSM)</br>
 **game.effectMacroTorg.playerPlayback()</br>**
-Better if it's the last message in the log. Ask for recipient</br>
+Better if it's the last message in the log. Ask for recipient
 
 6.Added a script that un-pool cards of players at the end of combat.
 (remove the flag)
+
+7.Added a script that remove Stymied and Vulnerable staus when clicking "end of turn" in combat tracker.
+
+8.Added a script that ask if you want to update the driver and the skill of a Vehicule actor</br>
+when you drag and drop an actor on it.
 
 # ScreenShots are coming, somed defaults will be listed
 If you already created an exhaustive passive effect that handles the bonus, it could give bad values.</br>
