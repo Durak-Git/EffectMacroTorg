@@ -46,12 +46,12 @@ Hooks.on("dropActorSheetData", async (myVehicle, mySheet, myPassenger) => {
     var skillValue = driver.system.skills[skill+"Vehicles"].value;
 
     await Dialog.confirm({
-        title: "Choix du conducteur",
-        content: "Ce personnage devient-il le nouveau conducteur ?",
+        title: game.i18n.localize("EffectMacroTorg.newDriver"),
+        content: game.i18n.localize("EffectMacroTorg.confirmDriver"),
         yes: () => {
             if (skillValue > 0){
                 myVehicle.update({"system.operator.name" : driver.name, "system.operator.skillValue" : skillValue});
-            } else {ui.notifications.warn(driver.name+" ne sait pas conduire cet engin")
+            } else {ui.notifications.warn(driver.name+game.i18n.localize("EffectMacroTorg.noCapacity"))
             }
             },
         no: () => {},
