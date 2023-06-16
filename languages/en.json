@@ -24,6 +24,9 @@
         "show": "Next card(s)",
         "curse": "Every attributes",
         "cardBack" : "Card goes back after missplay",
-        "cardOwner" : "Who will get the card back ?"
+        "cardOwner" : "Who will get the card back ?",
+        "newDriver" : "Set a driver",
+        "confirmDriver" : "Does this character want to drive this vehicle ?",
+        "noCapacity" : " can't pilote this kind of vehicle !"
     }
 }
