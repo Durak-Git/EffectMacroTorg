@@ -10,6 +10,7 @@ Hooks.once("ready", async function () {
     };
 });
 
+/* Included in the system
 //When a combat is ended, unpool cards of participants
 Hooks.on("deleteCombat", async (combat, dataUpdate) => {
     console.log(combat);
@@ -21,7 +22,7 @@ Hooks.on("deleteCombat", async (combat, dataUpdate) => {
     listCombatants.forEach(i => {if (!!game.actors.get(i).getDefaultHand()) {listHandsReset.push(game.actors.get(i).getDefaultHand())}});
     //delete the flag that give the pooled condition
     listHandsReset.forEach(hand => hand.cards.forEach(card => card.unsetFlag("torgeternity", "pooled")));
-})
+})*/
 
 //When the turn taken button is hit, delete "until end of turn" effects (stymied/vulnerable)
 Hooks.on("preUpdateCombatant", async (torgCombatant, dataFlags, dataDiff, userId) => {
