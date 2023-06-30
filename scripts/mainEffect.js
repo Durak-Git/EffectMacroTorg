@@ -240,37 +240,37 @@ async function simpleDefense() {
                     icon : "icons/equipment/shield/heater-crystal-blue.webp",   
                     duration : {"rounds" : 1},
                     changes : [{  
-                            "key": "system.dodgeDefense",  
+                            "key": "system.dodgeDefenseMod",  
                             "value": bo,
                             "priority": 20,
                             "mode": 2
                             },{
-                            "key": "system.intimidationDefense",
+                            "key": "system.intimidationDefenseMod",
                             "value": bo,
                             "priority": 20,
                             "mode": 2
                             },{
-                            "key": "system.maneuverDefense",
+                            "key": "system.maneuverDefenseMod",
                             "value": bo,
                             "priority": 20,
                             "mode": 2
                             },{
-                            "key": "system.meleeWeaponsDefense",
+                            "key": "system.meleeWeaponsDefenseMod",
                             "value": bo,
                             "priority": 20,
                             "mode": 2
                             },{
-                            "key": "system.tauntDefense",
+                            "key": "system.tauntDefenseMod",
                             "value": bo,
                             "priority": 20,
                             "mode": 2
                             },{
-                            "key": "system.trickDefense",
+                            "key": "system.trickDefenseMod",
                             "value": bo,
                             "priority": 20,
                             "mode": 2
                             },{
-                            "key": "system.unarmedCombatDefense",
+                            "key": "system.unarmedCombatDefenseMod",
                             "value": bo,
                             "priority": 20,
                             "mode": 2
@@ -408,31 +408,31 @@ async function torgBuff() {
             name : game.i18n.localize("EffectMacroTorg.defense")+" / "+bonu+" / "+dur+"rd(s)",
             duration : {"rounds" : dur},
             changes : [{
-            "key": "system.dodgeDefense",
+            "key": "system.dodgeDefenseMod",
             "value": bonu,
             "mode": 2
             },{
-            "key": "system.meleeWeaponsDefense",
+            "key": "system.meleeWeaponsDefenseMod",
             "value": bonu,
             "mode": 2
             },{
-            "key": "system.unarmedCombatDefense",
+            "key": "system.unarmedCombatDefenseMod",
             "value": bonu,
             "mode": 2
             },{
-            "key": "system.intimidationDefense",
+            "key": "system.intimidationDefenseMod",
             "value": bonu,
             "mode": 2
             },{
-            "key": "system.maneuverDefense",
+            "key": "system.maneuverDefenseMod",
             "value": bonu,
             "mode": 2
             },{
-            "key": "system.tauntDefense",
+            "key": "system.tauntDefenseMod",
             "value": bonu,
             "mode": 2
             },{
-            "key": "system.trickDefense",
+            "key": "system.trickDefenseMod",
             "value": bonu,
             "mode": 2
             }],
@@ -447,15 +447,15 @@ async function torgBuff() {
             name : game.i18n.localize("EffectMacroTorg.defense")+" / "+bonu+" / "+dur+"rd(s)",
             duration : {"rounds" : dur},
             changes : [{
-            "key": "system.dodgeDefense",
+            "key": "system.dodgeDefenseMod",
             "value": bonu,
             "mode": 2
             },{
-            "key": "system.meleeWeaponsDefense",
+            "key": "system.meleeWeaponsDefenseMod",
             "value": bonu,
             "mode": 2
             },{
-            "key": "system.unarmedCombatDefense",
+            "key": "system.unarmedCombatDefenseMod",
             "value": bonu,
             "mode": 2
             }],
