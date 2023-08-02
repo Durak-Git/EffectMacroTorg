@@ -478,7 +478,6 @@ async function torgBuff() {
                     NewEffect.icon = "icons/svg/upgrade.svg";
                 };
 
-            NewEffect.changes = newChange;
             allEffect.push(NewEffect);
     //////////////////////////////////////////////////////////////////////////////////////////////
         });
