@@ -479,7 +479,6 @@ async function torgBuff() {
                 };
 
             allEffect.push(NewEffect);
-    //////////////////////////////////////////////////////////////////////////////////////////////
         });
         //at least, create the effect
         await game.actors.get(actorID).createEmbeddedDocuments("ActiveEffect",allEffect);
