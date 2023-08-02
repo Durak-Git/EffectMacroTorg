@@ -49,7 +49,6 @@ Hooks.on("dropActorSheetData", async (myVehicle, mySheet, myPassenger) => {
 })
 
 //START OF MACROS
-
 //Show next 1-3 drama cards to a selection of players (much of this code is stolen in others macros)
 async function dramaVision(){
     if (!game.user.isGM) {return};
