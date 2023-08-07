@@ -23,10 +23,18 @@
       "discord": "Durak#6696"
     }
   ],
-  "system": ["torgeternity"],
   "relationships": {
-    "systems": [],
-    "requires": []
+    "systems": [{
+      "id": "torgeternity",
+      "type": "system",
+      "compatibility": {
+        "verified": "3.0.1"
+        }
+      }],
+    "requires": [{
+      "id": "times-up",
+      "type": "module"
+    }]
   },
   "packs": [
     {

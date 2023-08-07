@@ -27,6 +27,6 @@
         "cardOwner" : "A qui rendre la carte ?",
         "newDriver" : "Assigner un conducteur",
         "confirmDriver" : "Ce personnage devient-il le nouveau conducteur ?",
-        "noCapacity" : " ne sait pas piloter ce type vehicule !"
+        "noCapacity" : " ne sait pas piloter ce type véhicule !"
     }
 }
