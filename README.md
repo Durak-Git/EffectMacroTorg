@@ -41,7 +41,9 @@ Better if it's the last message in the log. Ask for recipient
 6.~~Added a script that un-pool cards of players at the end of combat~~.
 Core Torg System
 
-7.Added a script that remove Stymied and Vulnerable staus when clicking "end of turn" in combat tracker.
+7.~~Added a script that remove Stymied and Vulnerable staus when clicking "end of turn" in combat tracker.~~
+Script now detects turn based effect, ans reduces the duration each time the 'End turn' is checked.
+When reaching 0, effect is deleted.
 
 8.Added a script that ask if you want to update the driver and the skill of a Vehicule actor</br>
 when you drag and drop an actor on it.
