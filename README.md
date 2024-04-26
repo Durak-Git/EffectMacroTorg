@@ -24,7 +24,8 @@ Beware it doesn't prevent stacking from same source.
 **game.effectMacroTorg.simpleDefense()</br>**
 No possibility/up/drama (reroll) compliant</br>
 A second activation of the macro delete the AvtiveDefense for selected token</br>
-The use of Times-Up module can handle automatic reset of effects</br>
+~~The use of Times-Up module can handle automatic reset of effects~~</br>
+(The new script should handle duration)
 
 3.A macro to show Drama cards, for powers that allows to **see**/reorder/discard some of them.</br>
 **game.effectMacroTorg.dramaVision()</br>**
@@ -42,7 +43,7 @@ Better if it's the last message in the log. Ask for recipient
 Core Torg System
 
 7.~~Added a script that remove Stymied and Vulnerable staus when clicking "end of turn" in combat tracker.~~
-Script now detects turn based effect, ans reduces the duration each time the 'End turn' is checked.
+Script now detects turn based effect, and reduces the duration each time the 'End turn' is checked.
 When reaching 0, effect is deleted.
 
 8.Added a script that ask if you want to update the driver and the skill of a Vehicule actor</br>
