@@ -8,7 +8,7 @@
   "manifestPlusVersion": "1.2.0",
   "compatibility": {
     "minimum": "11",
-    "verified": "11.299",
+    "verified": "11.315",
     "maximum": "11"
   },
   "authors": [
@@ -28,13 +28,10 @@
       "id": "torgeternity",
       "type": "system",
       "compatibility": {
-        "verified": "3.0.1"
+        "verified": "3.7.2"
         }
       }],
-    "requires": [{
-      "id": "times-up",
-      "type": "module"
-    }]
+    "requires": []
   },
   "packs": [
     {
