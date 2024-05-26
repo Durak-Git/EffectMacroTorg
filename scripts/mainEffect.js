@@ -186,6 +186,9 @@ async function dramaVision() {
 
 //If you need to get back with activeDramaCard
 async function dramaFlashback() {
+  if (!game.user.isGM) {
+    return;
+  }
   const dramaDeck = game.cards.get(
     game.settings.get("torgeternity", "deckSetting").dramaDeck
   );
@@ -375,7 +378,6 @@ async function torgBuff() {
   let actorID = _token?.actor.id ?? game.user.character.id;
 
   var attr, bonu, dur; //the attribute key, the bonus expected, the duration expected
-  const listSkills = game.actors.get(actorID).system.skills;
 
   // Choose the attribute you want to modify
   const mychoice = new Promise((resolve, reject) => {
@@ -608,7 +610,7 @@ async function torgBuff() {
         duration: { rounds: dur, turns: dur },
         changes: [
           {
-            key: "system.attributes." + att,
+            key: "system.attributes." + att +".value",
             value: bonu,
             mode: 2,
           },
@@ -646,7 +648,7 @@ async function torgBuff() {
       duration: { rounds: dur, turns: dur },
       changes: [
         {
-          key: "system.attributes." + attr,
+          key: "system.attributes." + attr + ".value",
           value: bonu,
           mode: 2,
         },
