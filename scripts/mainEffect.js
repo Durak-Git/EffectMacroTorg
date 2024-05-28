@@ -371,7 +371,6 @@ async function simpleDefense() {
 }
 
 //create effects related with your choice, Defense/specific Attribute/All attributes
-//and creates all the effects related with skills, can be done by player
 //if any value change (attribute or add or limitation) erase the effects and redo it
 async function torgBuff() {
   //target is the selected token, mandatory for the GM, or the player's character if no selection
@@ -486,7 +485,7 @@ async function torgBuff() {
 
   if (attr === "defense") {
     //only Defenses, but ALL defenses
-    let NewEffect = {
+    let newEffect = {
       name:
         game.i18n.localize("EffectMacroTorg.defense") +
         " / " +
@@ -537,20 +536,20 @@ async function torgBuff() {
     // Aspect modifications related to bonus/malus
     switch (bonu < 0) {
       case true:
-        NewEffect.tint = "#ff0000";
-        NewEffect.icon = "icons/svg/downgrade.svg";
+        newEffect.tint = "#ff0000";
+        newEffect.icon = "icons/svg/downgrade.svg";
         break;
       default:
-        NewEffect.tint = "#00ff00";
-        NewEffect.icon = "icons/svg/upgrade.svg";
+        newEffect.tint = "#00ff00";
+        newEffect.icon = "icons/svg/upgrade.svg";
     }
     await game.actors
       .get(actorID)
-      .createEmbeddedDocuments("ActiveEffect", [NewEffect]);
+      .createEmbeddedDocuments("ActiveEffect", [newEffect]);
   } /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   else if (attr === "physicalDefense") {
     //only physical Defenses
-    let NewEffect = {
+    let newEffect = {
       name:
         game.i18n.localize("EffectMacroTorg.defense") +
         " / " +
@@ -581,26 +580,21 @@ async function torgBuff() {
     // Aspect modifications related to bonus/malus
     switch (bonu < 0) {
       case true:
-        NewEffect.tint = "#ff0000";
-        NewEffect.icon = "icons/svg/downgrade.svg";
+        newEffect.tint = "#ff0000";
+        newEffect.icon = "icons/svg/downgrade.svg";
         break;
       default:
-        NewEffect.tint = "#00ff00";
-        NewEffect.icon = "icons/svg/upgrade.svg";
+        newEffect.tint = "#00ff00";
+        newEffect.icon = "icons/svg/upgrade.svg";
     }
     await game.actors
       .get(actorID)
-      .createEmbeddedDocuments("ActiveEffect", [NewEffect]);
+      .createEmbeddedDocuments("ActiveEffect", [newEffect]);
   } /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   else if (attr === "all") {
-    //affect ALL attributes ["mind", "charisma", "strength", "spirit", "dexterity"]
-    var allEffect = [];
-    ["mind", "spirit", "strength", "dexterity", "charisma"].forEach((att) => {
       //preparation of attribute effect
-      let NewEffect = {
+      let newEffect = {
         name:
-          game.i18n.localize("EffectMacroTorg." + att) +
-          "-" +
           game.i18n.localize("EffectMacroTorg.curse") +
           " / " +
           bonu +
@@ -610,7 +604,27 @@ async function torgBuff() {
         duration: { rounds: dur, turns: dur },
         changes: [
           {
-            key: "system.attributes." + att +".value",
+            key: "system.attributes.mind.value",
+            value: bonu,
+            mode: 2,
+          },
+          {
+            key: "system.attributes.spirit.value",
+            value: bonu,
+            mode: 2,
+          },
+          {
+            key: "system.attributes.strength.value",
+            value: bonu,
+            mode: 2,
+          },
+          {
+            key: "system.attributes.dexterity.value",
+            value: bonu,
+            mode: 2,
+          },
+          {
+            key: "system.attributes.charisma.value",
             value: bonu,
             mode: 2,
           },
@@ -620,24 +634,22 @@ async function torgBuff() {
       // Aspect modifications related to bonus/malus
       switch (bonu < 0) {
         case true:
-          NewEffect.tint = "#ff0000";
-          NewEffect.icon = "icons/svg/downgrade.svg";
+          newEffect.tint = "#ff0000";
+          newEffect.icon = "icons/svg/downgrade.svg";
           break;
         default:
-          NewEffect.tint = "#00ff00";
-          NewEffect.icon = "icons/svg/upgrade.svg";
+          newEffect.tint = "#00ff00";
+          newEffect.icon = "icons/svg/upgrade.svg";
       }
 
-      allEffect.push(NewEffect);
-    });
     //at least, create the effect
     await game.actors
       .get(actorID)
-      .createEmbeddedDocuments("ActiveEffect", allEffect);
+      .createEmbeddedDocuments("ActiveEffect", [newEffect]);
   } else {
     //One attribute
     //preparation of attribute effect
-    let NewEffect = {
+    let newEffect = {
       name:
         game.i18n.localize("EffectMacroTorg." + attr) +
         " / " +
@@ -659,18 +671,18 @@ async function torgBuff() {
     // Aspect modifications related to bonus/malus
     switch (bonu < 0) {
       case true:
-        NewEffect.tint = "#ff0000";
-        NewEffect.icon = "icons/svg/downgrade.svg";
+        newEffect.tint = "#ff0000";
+        newEffect.icon = "icons/svg/downgrade.svg";
         break;
       default:
-        NewEffect.tint = "#00ff00";
-        NewEffect.icon = "icons/svg/upgrade.svg";
+        newEffect.tint = "#00ff00";
+        newEffect.icon = "icons/svg/upgrade.svg";
     }
 
     //at least, create the effect
     await game.actors
       .get(actorID)
-      .createEmbeddedDocuments("ActiveEffect", [NewEffect]);
+      .createEmbeddedDocuments("ActiveEffect", [newEffect]);
   }
 }
 
