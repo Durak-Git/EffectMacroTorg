@@ -16,7 +16,7 @@ Hooks.on(
   async (torgCombatant, dataFlags, dataDiff, userId) => {
     if (game.user.hasRole(4)) {
       if (dataFlags.flags.world.turnTaken) {
-        var myActor = torgCombatant.actor;
+        let myActor = torgCombatant.actor;
         for (const ef of myActor.effects.filter(
           (e) => e.duration.type === "turns"
         )) {
@@ -41,9 +41,9 @@ Hooks.on("dropActorSheetData", async (myVehicle, mySheet, myPassenger) => {
     (fromUuidSync(myPassenger.uuid).type === "vehicle")
   )
     return;
-  var driver = fromUuidSync(myPassenger.uuid);
-  var skill = myVehicle.system.type.toLowerCase();
-  var skillValue = driver.system.skills[skill + "Vehicles"].value;
+  let driver = fromUuidSync(myPassenger.uuid);
+  let skill = myVehicle.system.type.toLowerCase();
+  let skillValue = driver.system.skills[skill + "Vehicles"].value;
 
   await Dialog.confirm({
     title: game.i18n.localize("EffectMacroTorg.newDriver"),
@@ -140,7 +140,7 @@ async function dramaVision() {
     game.settings.get("torgeternity", "deckSetting").dramaDeck
   );
   // Find ?? the index of the Active Drama Card in the Drama Deck
-  var ind = game.cards.get(
+  let ind = game.cards.get(
     game.settings.get("torgeternity", "deckSetting").dramaActive
   )._source.cards[0].sort;
 
@@ -158,7 +158,7 @@ async function dramaVision() {
   }).render(true);
 
   function createMessage(html) {
-    var targets = [];
+    let targets = [];
     // build list of selected players ids for whispers target
     for (let user of users) {
       if (html.find('[name="' + user.id + '"]')[0].checked) {
@@ -248,7 +248,7 @@ async function playerPlayback() {
   }).render(true);
 
   function createMessage(html) {
-    var target;
+    let target;
     // build list of selected players ids for whispers target
     for (let user of users) {
       if (html.find('[name="' + user.id + '"]')[0].checked) {
@@ -265,8 +265,8 @@ async function playerPlayback() {
       const lastCard = destinyDiscard.cards.contents.pop();
       const parentHand = target.character.getDefaultHand();
       const listMessage = game.messages.contents;
-      var filtre = listMessage.filter((m) => m._source.user === target.id);
-      var lastMessage = filtre.pop();
+      let filtre = listMessage.filter((m) => m._source.user === target.id);
+      let lastMessage = filtre.pop();
       lastCard.pass(parentHand);
       if (lastCard) {
         ChatMessage.deleteDocuments([lastMessage.id]);
@@ -277,24 +277,24 @@ async function playerPlayback() {
 
 //active defense on multi selection, not compliant with possibilities/up/drama, any reroll.
 async function simpleDefense() {
-  var targets = canvas.tokens.controlled;
+  let targets = canvas.tokens.controlled;
   if (targets.length === 0) {
     ui.notifications.error("You must select a token!");
     return;
   }
   targets.forEach((element) => {
-    var myActor = element.actor;
+    let myActor = element.actor;
     console.log(myActor);
     if (!myActor) {
       ui.notifications.error("You must select a token!");
     } else {
-      var oldAD = myActor.effects.find(
+      let oldAD = myActor.effects.find(
         (a) => a.name === game.i18n.localize("EffectMacroTorg.AD")
       );
 
       if (!oldAD) {
-        var jet = new Roll("1d20x10x20").evaluate({ async: false });
-        var bo = Math.max(1, game.effectMacroTorg.torgB(jet.total));
+        let jet = new Roll("1d20x10x20").evaluate({ async: false });
+        let bo = Math.max(1, game.effectMacroTorg.torgB(jet.total));
         let AD = {
           speaker: ChatMessage.getSpeaker(),
           content: game.i18n.localize("EffectMacroTorg.AD") + "+" + bo,
@@ -376,7 +376,7 @@ async function torgBuff() {
   //target is the selected token, mandatory for the GM, or the player's character if no selection
   let actorID = _token?.actor.id ?? game.user.character.id;
 
-  var attr, bonu, dur; //the attribute key, the bonus expected, the duration expected
+  let attr, bonu, dur; //the attribute key, the bonus expected, the duration expected
 
   // Choose the attribute you want to modify
   const mychoice = new Promise((resolve, reject) => {
